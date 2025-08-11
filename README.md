@@ -49,5 +49,42 @@ php artisan migrate
 php artisan serve
 ---
 
+🔍 Search Functionality
+- Search by serial number from the product index page
+- Pagination retains search query
+- Matching serials are highlighted using <mark>
+- Clean UI with instant feedback
 
+📸 Screenshots
+Add screenshots of your dashboard UI, product table, and create/edit forms here.
+
+✨ UI/UX Highlights
+- Gradient buttons with hover effects
+- Font Awesome icons for actions
+- Tooltips for clarity
+- Empty states with illustrations and messages
+- Consistent color palette across modules
+- Responsive layout for desktop and mobile
+
+🧠 Developer Notes
+- Uses Laravel resourceful routing and route model binding
+- Form requests handle validation cleanly
+- Blade components for buttons, alerts, and form inputs
+- Foreign key constraints enforced in migrations
+- Modular design for scalability and maintainability
+
+🙌 Credits
+Crafted with ❤️ by Md Moklesar Rahman
+Laravel architect & UI/UX designer
+Focused on beauty, clarity, and backend precision.
+📧 Email: md.moklasarrahmanbappy@gmail.co
+
+📜 License
+This project is open-source under the MIT Licens
+
+🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to change.
+
+📬 Contact
+For feedback, suggestions, or collaboration, feel free to reach out via email or GitHub.
 
