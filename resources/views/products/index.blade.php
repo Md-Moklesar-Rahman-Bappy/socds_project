@@ -5,14 +5,29 @@
 @section('contents')
 <div class="container py-5">
   <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-    <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(90deg, #00bcd4, #2196f3); padding: 1.5rem;">
-      <h3 class="mb-0 fw-bold"><i class="fa fa-boxes me-2"></i> Product Inventory</h3>
-      <a href="{{ route('products.create') }}" class="btn btn-warning btn-lg fw-bold shadow-sm">
-        <i class="fa fa-plus me-1"></i> Add Product
-      </a>
+
+    {{-- Header --}}
+    <div class="card-header text-white" style="background: linear-gradient(90deg, #00bcd4, #2196f3); padding: 1.5rem;">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <h3 class="mb-0 fw-bold"><i class="fa fa-boxes me-2"></i> Product Inventory</h3>
+
+        <form method="GET" action="{{ route('products.index') }}" class="d-flex">
+          <input type="text" name="search" value="{{ request('search') }}"
+                 class="form-control me-2" placeholder="Search by Serial Number">
+          <button type="submit" class="btn btn-gradient-primary">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </form>
+
+        <a href="{{ route('products.create') }}" class="btn btn-warning btn-lg fw-bold shadow-sm">
+          <i class="fa fa-plus me-1"></i> Add Product
+        </a>
+      </div>
     </div>
 
+    {{-- Body --}}
     <div class="card-body bg-light" style="padding: 2rem;">
+
       {{-- Success Message --}}
       @if(Session::has('success'))
         <div class="alert alert-success alert-dismissible fade show shadow-sm fw-semibold" role="alert">
@@ -47,7 +62,13 @@
                 <td><span class="badge bg-primary">{{ $p->category?->category_name ?? 'N/A' }}</span></td>
                 <td><span class="badge bg-success">{{ $p->brand?->brand_name ?? 'N/A' }}</span></td>
                 <td><span class="badge bg-warning text-dark">{{ $p->model?->model_name ?? 'N/A' }}</span></td>
-                <td>{{ $p->serial_no ?? '-' }}</td>
+                <td>
+                  @if(request('search'))
+                    {!! str_replace(request('search'), '<mark>' . request('search') . '</mark>', $p->serial_no) !!}
+                  @else
+                    {{ $p->serial_no ?? '-' }}
+                  @endif
+                </td>
                 <td>{{ $p->project_serial_no ?? '-' }}</td>
                 <td>{{ $p->position ?? '-' }}</td>
                 <td>{{ $p->user_description ?? '-' }}</td>
@@ -88,10 +109,11 @@
         </table>
       </div>
 
-      {{-- Optional Pagination --}}
-      {{-- <div class="d-flex justify-content-center mt-4">
-        {{ $products->links() }}
-      </div> --}}
+      {{-- Pagination --}}
+      <div class="d-flex justify-content-center mt-4">
+        {{ $products->withQueryString()->links() }}
+      </div>
+
     </div>
   </div>
 </div>

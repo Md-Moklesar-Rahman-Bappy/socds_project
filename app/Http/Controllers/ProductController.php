@@ -10,11 +10,19 @@ use App\Models\AssetModel;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with(['category', 'brand', 'model'])->get();
+        $query = Product::query();
+
+        if ($request->filled('search')) {
+            $query->where('serial_no', 'like', '%' . $request->search . '%');
+        }
+
+        $products = $query->with(['category', 'brand', 'model'])->paginate(10)->withQueryString();
+
         return view('products.index', compact('products'));
     }
+
 
     public function create()
     {
